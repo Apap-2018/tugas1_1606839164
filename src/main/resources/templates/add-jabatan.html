@@ -2,15 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:replace="fragments/fragment :: headerFragment (title='Tambah Berhasil')"></title>
-	
-	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
-	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+<title th:replace="fragments/fragment :: headerFragment (title='Tambah Berhasil')"></title>
+<object th:include="fragments/fragment ::css" th:remove="tag"></object>
+<object th:include="fragments/fragment ::js" th:remove="tag"></object>
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
-	<h2>Jabatan berhasil ditambah</h2>
+	<br>
+	<div class="container-fluid">
+		<h2>Sukses!</h2>
+		<p th:text="'Jabatan berhasil ditambahkan'"></p>
+	</div>
 	
 </body>
 </html>

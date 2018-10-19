@@ -15,11 +15,17 @@
 
 <body>
 	<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#" >APAP</a>
+		<a class="navbar-brand" href="#" >SIPEG</a>
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 				<li class="nav-item active">
 					<a class="nav-link" th:href="@{/}">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" th:href="@{/pegawai/tambah}">Tambah Pegawai</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" th:href="@{/}">Cari Pegawai</a>
 				</li>
 				<li class="nav-item active">
 					<a class="nav-link" th:href="@{/jabatan/tambah}">Tambah Jabatan</a>

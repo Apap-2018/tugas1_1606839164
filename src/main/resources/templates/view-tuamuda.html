@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:replace="fragments/fragment :: headerFragment (title='Detail Pegawai')"></title>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
+	<div class="container-fluid">
+		<h2>Lihat Data Pegawai</h2>
+		<br>
+		<div class="row">
+			<div class=col-md-6>
+				<div class="card">
+					<div class="card-header" th:text="${pegawaiTermuda.nama}"></div>
+					<div class="card-body">
+						<p th:text="'NIP	= ' + ${pegawaiTermuda.nip}"></p>
+						<p
+							th:text="'TTL	= ' + ${pegawaiTermuda.tempatLahir} + ', ' + ${pegawaiTermuda.tanggalLahir}"></p>
+						<p th:text="'Tahun Masuk	= ' + ${pegawaiTermuda.tahunMasuk}"></p>
+						<div th:each="instansi:${pegawaiTermuda.instansi}">
+							<p th:text="'Instansi	= ' + ${instansi.nama}"></p>
+						</div>
+						<p>Jabatan :</p>
+						<div th:each="jabatan:${pegawaiTermuda.jabatanList}">
+							<ul>
+								<li th:text="'Jabatan	= ' + ${jabatan.nama}"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+			<div class=col-md-6>
+				<div class="card">
+					<div class="card-header" th:text="${pegawaiTertua.nama}"></div>
+					<div class="card-body">
+						<p th:text="'NIP	= ' + ${pegawaiTertua.nip}"></p>
+						<p
+							th:text="'TTL	= ' + ${pegawaiTertua.tempatLahir} + ', ' + ${pegawaiTertua.tanggalLahir}"></p>
+						<p th:text="'Tahun Masuk	= ' + ${pegawaiTertua.tahunMasuk}"></p>
+						<div th:each="instansi:${pegawaiTertua.instansi}">
+							<p th:text="'Instansi	= ' + ${instansi.nama}"></p>
+						</div>
+						<p>Jabatan :</p>
+						<div th:each="jabatan:${pegawaiTertua.jabatanList}">
+							<ul>
+								<li th:text="'Jabatan	= ' + ${jabatan.nama}"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

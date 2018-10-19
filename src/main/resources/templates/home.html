@@ -13,11 +13,10 @@
 	
 	<center>
 	<h2>Sistem Informasi Kepegawaian</h2>
-	<h6>Selamat datang di Sistem Informasi Kepegawaian</h6></center>
+	<p>Selamat datang di Sistem Informasi Kepegawaian</p></center>
 	
 	<div class="container-fluid">
-	<br>
-	
+		
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
@@ -40,7 +39,8 @@
 	
 	
 	<div class="container-fluid">
-	<br>
+		
+		<br>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
@@ -52,11 +52,11 @@
 							<label for="nip">Pilih Jabatan</label>
 							<br>
 								<select th:name="idJabatan">
-									<option disabled="disabled" selected="selected">-- Pilih Jabatan --</option>
+									<option disabled="disabled" selected="selected"> Pilih Jabatan </option>
 									<option th:each="jabatan : ${jabatanList}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
 								</select>
 							</form>
-							<button type="submit" class="btn btn-primary">Cari</button>
+							<button type="submit" class="btn btn-primary">Lihat</button>
 						</div>
 					</form>
 					
@@ -75,16 +75,16 @@
 					<div class="card-header">
 						<h3>Lihat Pegawai Termuda dan Tertua</h3>
 					</div>
-					<form th:action="@{/jabatan/view}" method = "GET">
+					<form th:action="@{/pegawai/termuda-tertua}" method = "GET">
 						<div class="card-body">
 							<label for="nip">Pilih Instansi</label>
 							<br>
-								<select th:name="idJabatan">
-									<option disabled="disabled" selected="selected">-- Pilih Jabatan --</option>
-									<option th:each="jabatan : ${jabatanList}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+								<select th:name="idInstansi">
+									<option disabled="disabled" selected="selected"> Pilih Instansi </option>
+									<option th:each="instansi : ${instansiList}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
 								</select>
 							</form>
-							<button type="submit" class="btn btn-primary">Cari</button>
+							<button type="submit" class="btn btn-primary">Lihat</button>
 						</div>
 					</form>
 					
@@ -94,8 +94,7 @@
 		</div>
 		</div>
 		
-		
 	</div>
-	
+
 </body>
 </html>
