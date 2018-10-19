@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:replace="fragments/fragment :: headerFragment (title='Home Page')"></title>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	
+	<center>
+	<h2>Sistem Informasi Kepegawaian</h2>
+	<h6>Selamat datang di Sistem Informasi Kepegawaian</h6></center>
+	
+	<div class="container-fluid">
+	<br>
+	
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3>Lihat Data Pegawai Berdasarkan NIP</h3>
+					</div>
+					<form th:action="@{/pegawai}" method="GET">
+						<div class="card-body">
+							<label for="nip">Masukan Nomor Induk Pegawai</label>
+							<input type="text" name="nip" class="form-control" />
+							<button type="submit" class="btn btn-primary">Lihat</button>
+						</div>
+					</form>
+					
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	
+	
+	<div class="container-fluid">
+	<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3>Lihat Detail Jabatan</h3>
+					</div>
+					<form th:action="@{/jabatan/view}" method = "GET">
+						<div class="card-body">
+							<label for="nip">Pilih Jabatan</label>
+							<br>
+								<select th:name="idJabatan">
+									<option disabled="disabled" selected="selected">-- Pilih Jabatan --</option>
+									<option th:each="jabatan : ${jabatanList}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+								</select>
+							</form>
+							<button type="submit" class="btn btn-primary">Cari</button>
+						</div>
+					</form>
+					
+				</div>
+				
+			</div>
+			
+			
+			
+			<div class="container-fluid">
+		
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header">
+						<h3>Lihat Pegawai Termuda dan Tertua</h3>
+					</div>
+					<form th:action="@{/jabatan/view}" method = "GET">
+						<div class="card-body">
+							<label for="nip">Pilih Instansi</label>
+							<br>
+								<select th:name="idJabatan">
+									<option disabled="disabled" selected="selected">-- Pilih Jabatan --</option>
+									<option th:each="jabatan : ${jabatanList}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+								</select>
+							</form>
+							<button type="submit" class="btn btn-primary">Cari</button>
+						</div>
+					</form>
+					
+				</div>
+				
+			</div>
+		</div>
+		</div>
+		
+		
+	</div>
+	
+</body>
+</html>

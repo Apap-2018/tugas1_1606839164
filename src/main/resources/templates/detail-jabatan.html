@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:replace="fragments/fragment :: headerFragment (title='Detail Jabatan')"></title>
+	
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
+	
+	
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+}
+td, th {
+    border: 4px solid #000000;
+    text-align: center;
+    padding: 8px;
+}
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
+</head>
+
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<h2 th:text="'Detail Jabatan ' + ${jabatan.nama}"></h2>
+	
+	<table>
+			<tbody>
+				<tr>
+					<td align="center" th:text="Nama"></td> 
+					<td align="center" th:text="${jabatan.nama}"></td> 
+				</tr>
+				
+				<tr>
+					<td align="center" th:text="Deskripsi"></td> 
+					<td align="center" th:text="${jabatan.deskripsi}"></td> 
+				</tr>
+				
+				<tr>
+					<td align="center">Gaji Pokok</td> 
+					<td align="center" th:text="${jabatan.gajiPokok}"></td> 
+				</tr>
+			</tbody>
+	</table>
+	
+	
+	<br>
+	<div class="row">
+		<div class ="col">
+			<form th:action="@{/jabatan/ubah}" th:method="GET">
+			<input type="hidden" name="idJabatan" th:value="${jabatan.id}" />
+			<button value="submit">Ubah</button>
+			</form>
+	
+			<div>
+				<form th:action="@{/jabatan/hapus}" th:method "POST">
+				<input type="hidden" name="idJabatan" th:value="${jabatan.id}"  />
+				<button value="submit">Hapus</button>
+				</form>
+				</div>
+		</div>
+	
+	</div>
+	
+	
+</body>
+</html>
