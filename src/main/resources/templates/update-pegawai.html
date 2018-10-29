@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title th:text="${title}"></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+
+<script>
+    $(document)
+        .ready(
+            function() {
+                $
+                    .getJSON(
+                        "http://localhost:8080/provinsi-get-update",
+                        {
+                            provinsiId : $("#provinsi")
+                                .val(),
+                            pegawaiNip : $("#nipP").val(),
+                            ajax : 'true'
+                        },
+                        function(data) {
+                            var len = data.length;
+                            var selected = data[data.length - 1];
+                            var html = '<option value= "' + selected.id + '" disabled="disabled" selected="selected">'
+                                + selected.nama
+                                + '</option>';
+                            for (var i = 0; i < len - 1; i++) {
+                                html += '<option value= "'+ data[i].id +'">'
+                                    + data[i].nama
+                                    + '</option>';
+                            }
+                            $('#instansi').html(html);
+                        });
+            });
+    $('#provinsi')
+        .change(
+            function() {
+                $
+                    .getJSON(
+                        "http://localhost:8080/provinsi-get",
+                        {
+                            provinsiId : $(this).val(),
+                            ajax : 'true'
+                        },
+                        function(data) {
+                            var html = '';
+                            var len = data.length;
+                            for (var i = 0; i < len; i++) {
+                                html += '<option value= "'+ data[i].id +'" th:text="'+ data[i].nama +'">'
+                                    + data[i].nama
+                                    + '</option>';
+                            }
+                            $('#instansi').html(html);
+                        });
+            });
+    $('#instansi').change(function() {
+        $.getJSON("http://localhost:8080/instansi-get", {
+            instansiId : $(this).val(),
+            ajax : 'true'
+        }, function(data) {
+            this.value = data;
+        });
+    });
+</script>
+
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 th:text="'Ubah Data Pegawai - ' + ${pegawai.nip}"></h4>
+                </div>
+                <div class="card-body">
+                    <form th:action="@{/pegawai/ubah}" th:object="${pegawai}"
+                          method="POST">
+                        <input type="hidden" id="nipP" th:value="${pegawai.nip}"
+                               th:field="*{nip}" /> <input type="hidden" id="id_pegawai"
+                                                           th:value="${pegawai.id}" th:field="*{id}" /> Nama: <br> <input
+                            type="text" name="nama" th:field="*{nama}" /> <br> Tempat
+                        Lahir: <br> <input type="text" name="tempatLahir"
+                                           th:field="*{tempatLahir}" /> <br> Tanggal Lahir: <br>
+                        <input type="date" name="tanggalLahir" th:field="*{tanggalLahir}" />
+                        <br> Tahun Masuk: <br> <input type="text"
+                                                      name="tahunMasuk" th:field="*{tahunMasuk}" /> <br>
+                        
+                        Provinsi: <br> <select id="provinsi" name="provinsi"
+                                               th:field="${pegawai.instansi.provinsi.nama}">
+                        <option th:each="provinsi : ${listProvinsi}"
+                                th:value="${provinsi.id}" th:text="${provinsi.nama}">
+                        </option>
+                    </select> 
+                    <br> 
+                    
+                    Instansi: <br> <select id="instansi" name="instansi" th:field="${pegawai.instansi.nama}">
+                    <option th:each="instansi : ${listInstansi}" th:value=${instansi.id} th:text="${instansi.nama}">
+                    </option>
+                    
+                    </select> <br> Jabatan: <br> (Pilih jabatan yang diinginkan,
+                        bisa lebih dari satu)
+
+                        <table border="1">
+                            <tr th:each="jabatan,iterationStatus : ${listJabatan}">
+                                <td th:text="${iterationStatus.count}"></td>
+                                <td th:text="${jabatan.nama}"></td>
+                                <td><input type="checkbox" th:field="*{jabatanList}"
+                                           th:value="${jabatan.id}" /> <label
+                                        th:for="${#ids.prev('jabatanList')}"> </label></td>
+                            </tr>
+                        </table>
+                        <p></p>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:replace="fragments/fragment :: headerFragment (title='Home Page')"></title>
+	<title th:text="${title}"></title>
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -14,6 +14,8 @@
 	<center>
 	<h2>Sistem Informasi Kepegawaian</h2>
 	<p>Selamat datang di Sistem Informasi Kepegawaian</p></center>
+	
+	<hr>
 	
 	<div class="container-fluid">
 		
@@ -53,13 +55,11 @@
 							<br>
 								<select th:name="idJabatan">
 									<option disabled="disabled" selected="selected"> Pilih Jabatan </option>
-									<option th:each="jabatan : ${jabatanList}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
+									<option th:each="jabatan : ${listJabatan}" th:value="${jabatan.id}" th:text="${jabatan.nama}"></option>
 								</select>
 							</form>
 							<button type="submit" class="btn btn-primary">Lihat</button>
 						</div>
-					</form>
-					
 				</div>
 				
 			</div>
@@ -81,20 +81,15 @@
 							<br>
 								<select th:name="idInstansi">
 									<option disabled="disabled" selected="selected"> Pilih Instansi </option>
-									<option th:each="instansi : ${instansiList}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+									<option th:each="instansi : ${listInstansi}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
 								</select>
 							</form>
 							<button type="submit" class="btn btn-primary">Lihat</button>
 						</div>
-					</form>
-					
 				</div>
 				
 			</div>
 		</div>
 		</div>
-		
-	</div>
-
 </body>
 </html>

@@ -2,25 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:replace="fragments/fragment :: headerFragment (title='Detail Pegawai')"></title>
+	<title th:text="${title}"></title>
+	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 
-<style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 50%;
-}
-td, th {
-    border: 4px solid #000000;
-    text-align: center;
-    padding: 8px;
-}
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
 </head>
 
 <body>
@@ -28,48 +14,24 @@ tr:nth-child(even) {
 	<h2 th:text="'Lihat Data Pegawai - ' + ${pegawai.nip} "></h2>
 	
 	<br>
+
+	<h4 th:text="'NIP : 	' + ${pegawai.nip}"></h4>
+	<h4 th:text="'Nama : 	' + ${pegawai.nama}"></h4>
+	<h4 th:text="'Tempat Lahir : 	' + ${pegawai.tempatLahir}"></h4>
+	<h4 th:text="'Tanggal Lahir : 	' + ${pegawai.tanggalLahir}"></h4>
+	<h4 th:text="'Tahun Masuk : 	' + ${pegawai.tahunMasuk}"></h4>
+	<h4 th:text="'Nama Instansi : 	' + ${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></h4>
+	<h4 th:text="'Jabatan : 	'"></h4>
+	<div th:each="jabatan : ${pegawai.jabatanList}">
+    	<h4 th:text="'- 	' + ${jabatan.nama}"></h4>
+	</div>
+	
 	<br>
-	<table>
-			<tbody>
-				<tr>
-					<td align="center" th:text="NIP"></td> 
-					<td align="center" th:text="${pegawai.nip}"></td> 
-				</tr>
-				<tr>
-					<td align="center" th:text="Nama"></td> 
-					<td align="center" th:text="${pegawai.nama}"></td> 
-				</tr>
-				<tr>
-					<td align="center">Tempat Lahir</td> 
-					<td align="center" th:text="${pegawai.tempatLahir}"></td> 
-				</tr>
-				<tr>
-					<td align="center">Tanggal Lahir</td> 
-					<td align="center" th:text="${pegawai.tanggalLahir}"></td> 
-				</tr>
-				<tr>
-					<td align="center">Tahun Masuk</td> 
-					<td align="center" th:text="${pegawai.tahunMasuk}"></td> 
-				</tr>
-				<tr>
-					<td align="center">Nama Instansi</td> 
-					<td align="center" th:text="${pegawai.instansi.nama}"></td> 
-				</tr>
-				<tr>
-					<td align="center">Jabatan</td> 
-					<td>
-						<ul>
-							<li th:each="jabatan: ${pegawai.jabatanList}" th:text="${jabatan.nama}"></li>
-						</ul>
-					</td> 
-				</tr>
-				<tr>
-					<td align="center">Gaji</td>
-					<td th:text="${#numbers.formatDecimal(gajiPegawai, 0, 'COMMA', 2, 'POINT')}"></td>
-				</tr>
-				
-			</tbody>
-		</table>
+	<h4 th:text="'Gaji : Rp	' + ${#numbers.formatDecimal(gajiPegawai, 0, 'COMMA', 2, 'POINT')}"></h4>
+	<form th:action="@{/pegawai/ubah}" method="GET">
+    	<input type="hidden" th:field="*{pegawai.nip}"></input>
+    <button type="submit" class="btn btn-primary">Ubah</button>
+	</form>
 	
 </body>
 </html>

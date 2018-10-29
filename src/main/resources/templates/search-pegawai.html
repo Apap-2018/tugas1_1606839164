@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title th:text="${title}"></title>
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+	<nav th:replace="fragments/fragment :: navbar"></nav>
+	
+	<div class="container-fluid">
+	<h2>Cari Pegawai</h2>
+	
+	<form th:action="@{/pegawai/cari}" method="GET">
+		<div class="row">
+			<div class="col-3">
+				Provinsi
+			</div>
+			<div class="col-6">
+				<select class="form-control" name="idProvinsi" id="selectprov" onchange="document.getElementById('select').value='';filter(this.value)">
+					<option value="" selected>Pilih Provinsi</option>
+					<div th:each="provinsi : ${listProvinsi}">
+						<option th:if="${provinsi.id==idProvinsi}" selected th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
+						<option th:unless="${provinsi.id}==idProvinsi" th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
+					</div>
+				</select>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-3">
+				Nama Instansi
+			</div>
+			<div class="col-6">
+				<select class="form-control" name="idInstansi" id="select">
+					<option value="" selected>Pilih Instansi</option>
+					<div th:each="instansi : ${listInstansi}">
+						<option th:if="${instansi.id==idInstansi}" selected th:data-id-prov="${instansi.provinsi.id}" th:value="${instansi.id}" th:text="${instansi.nama}+' - '+${instansi.provinsi.nama}"></option>
+						<option th:unless="${instansi.id==idInstansi}" th:data-id-prov="${instansi.provinsi.id}" th:value="${instansi.id}" th:text="${instansi.nama}+' - '+${instansi.provinsi.nama}"></option>
+					</div>
+				</select>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-3">
+				Jabatan
+			</div>
+			<div class="col-6">
+				<select class="form-control" name="idJabatan">
+					<option value="" selected>Pilih Jabatan</option>
+					<div th:each="jabatan : ${listJabatan}">
+						<option th:if="${jabatan.id==idJabatan}" selected th:text="${jabatan.nama}" th:value="${jabatan.id}"></option>
+						<option th:unless="${jabatan.id==idJabatan}" th:text="${jabatan.nama}" th:value="${jabatan.id}"></option>
+					</div>
+				</select>
+			</div>		
+		</div>
+		<br>
+		<button class="btn btn-primary" type="submit">Cari</button>
+	</form>
+	<hr>
+	<div class="row" th:style="'padding:1em 2em 2em'">
+		<div class="col">
+			<table id="table" class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th>NIP</th>
+						<th>Nama</th>
+						<th>Tempat Lahir</th>
+						<th>Tanggal Lahir</th>
+						<th>Tahun Masuk</th>
+						<th>Nama Instansi</th>
+						<th>Jabatan</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="pegawai : ${listPegawai}">
+						<td th:text="${pegawai.nip}"></td>
+						<td th:text="${pegawai.nama}"></td>
+						<td th:text="${pegawai.tempatLahir}"></td>
+						<td th:text="${pegawai.tanggalLahir}"></td>
+						<td th:text="${pegawai.tahunMasuk}"></td>
+						<td th:text="${pegawai.instansi.nama} + ' - ' + ${pegawai.instansi.provinsi.nama}"></td>
+						<td>
+							<ul>
+								<li th:each="jabatanPegawai : ${pegawai.jabatanList}">
+									<span th:text="${jabatanPegawai.nama}"></span>
+								</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$('#table').DataTable();
+			
+		});
+	</script>
+	<script>
+	$(document).ready( function () {
+		filter(document.getElementById("selectprov").value);
+	} );
+	function filter(keyword) {
+	    var select = document.getElementById("select");
+	    for (var i = 1; i < select.length; i++) {
+	        var txt = select.options[i].getAttribute('data-id-prov');
+	        var include = txt.startsWith(keyword); 
+	        select.options[i].style.display = include ? 'list-item':'none';
+	    }
+	}
+	</script>
+</body>
+</html>

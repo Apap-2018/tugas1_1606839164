@@ -68,14 +68,14 @@ public class PegawaiModel implements Serializable{
             })
     @JoinTable(name = "jabatan_pegawai",
             joinColumns = { @JoinColumn(name = "id_pegawai") },
-            inverseJoinColumns = { @JoinColumn(name = "id_jabatan") })
+            inverseJoinColumns = { @JoinColumn(name = "id_jabatan")})
     private List<JabatanModel> jabatanList;
 
 	
 	public long getId() {
 		return id;
 	}
-
+	
 	public void setId(long id) {
 		this.id = id;
 	}

@@ -2,120 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Add Pegawai</title>
-<object th:include="fragments/fragment ::css" th:remove="tag"></object>
-<object th:include="fragments/fragment ::js" th:remove="tag"></object>
+<title th:text="${title}"></title>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 </head>
 
 <body>
 	<nav th:replace="fragments/fragment :: navbar"></nav>
+	<br>
 	<div class="container-fluid">
-		<br>
-		<h3>Tambah Pegawai</h3>
-		<br>
 		<div class="row">
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header">Pegawai Baru</div>
+					<div class="card-header">
+						<h4>Tambah Pegawai</h4>
+					</div>
 					<div class="card-body">
 						<form th:action="@{/pegawai/tambah}" th:object="${pegawai}"
 							method="POST">
-							<div class="container-fluid">
-								<div class="row">
-									<div class="col-md-6">
-										<p>Nama</p>
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" name="nama" />
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Tempat Lahir</p>
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" name="tempatLahir" />
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Tanggal Lahir</p>
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="date" name="tanggalLahir" />
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Tahun Masuk</p>
-									</div>
-									<div class="col-md-6">
-										<input class="form-control" type="text" name="tahunMasuk" />
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Provinsi</p>
-									</div>
-									<div class="col-md-6">
-										<select id="provinsi" name="provinsi">
-											<option disabled="disabled" selected="selected">--Pilih
-												Provinsi --</option>
-											<option th:each="provinsi : ${listOfProvinsi}"
-												th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
-										</select>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Instansi</p>
-									</div>
-									<div class="col-md-6">
-										<select id="instansi" name="instansi" th:value="${instansi}"
-											required="required">
-											<option disabled="disabled" selected="selected">--Pilih
-												Instansi --</option>
-										</select>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-6">
-										<p>Jabatan</p>
-									</div>
-									<div class="col-md-12">
-										<table border="1">
-											<tr th:each="jabatan,iterationStatus : ${listOfJabatan}">
-												<td th:text="${iterationStatus.count}"></td>
-												<td th:text="${jabatan.nama}"></td>
-												<td><input type="checkbox" th:field="*{jabatanList}"
-													th:value="${jabatan.id}" /> <label
-													th:for="${#ids.prev('jabatanList')}"></label></td>
-											</tr>
-										</table>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<button class="btn btn-primary" type="submit">Submit</button>
-									</div>
-								</div>
-							</div>
+							Nama: <br> 
+							<input type="text" name="nama" /> <br>
+							Tempat Lahir: <br> 
+							<input type="text" name="tempatLahir" />
+							<br> 
+							Tanggal Lahir: <br> <input type="date"
+								name="tanggalLahir" /> <br> 
+							Tahun Masuk: <br> <input
+								type="text" name="tahunMasuk" /> <br> 
+							Provinsi: <br>
+								<select id="provinsi" name="provinsi">
+								<option disabled="disabled" selected="selected">--Pilih Provinsi --</option>
+								<option th:each="provinsi : ${listProvinsi}"th:value="${provinsi.id}" th:text="${provinsi.nama}"></option>
+							</select> <br> 
+							Instansi: <br> 
+							<select id="instansi" name="instansi" th:value="${instansi}" required="required">
+								<option disabled="disabled" selected="selected">-- Pilih Instansi --</option>
+								<option th:each="instansi : ${instansiList}" th:value="${instansi.id}" th:text="${instansi.nama}"></option>
+							</select> <br>
+							
+							Jabatan: <br> 
+							(Pilih jabatan yang diinginkan,
+							bisa lebih dari satu)
+
+							<table border="1">
+								<tr th:each="jabatan,iterationStatus : ${listJabatan}">
+									<td th:text="${iterationStatus.count}"></td>
+									<td th:text="${jabatan.nama}"></td>
+									<td><input type="checkbox" th:field="*{jabatanList}"
+										th:value="${jabatan.id}" /> <label
+										th:for="${#ids.prev('jabatanList')}"></label></td>
+								</tr>
+							</table>
+
+							<br>
+							<button type="submit" class="btn btn-primary">Simpan</button>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 	<script>
 		$('#provinsi')
 				.change(
 						function() {
 							$
 									.getJSON(
-											"http://localhost:8080/pegawai/provinsi-get",
+											"http://localhost:8080/provinsi-get",
 											{
 												provinsiId : $(this).val(),
 												ajax : 'true'
@@ -132,7 +90,7 @@
 											});
 						});
 		$('#instansi').change(function() {
-			$.getJSON("http://localhost:8080/pegawai/instansi-get", {
+			$.getJSON("http://localhost:8080/instansi-get", {
 				instansiId : $(this).val(),
 				ajax : 'true'
 			}, function(data) {

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:replace="fragments/fragment :: headerFragment (title='Ubah Jabatan')"></title>
+	<title th:text="${title}"></title>
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -21,7 +21,7 @@
 		<input type="text" name="deskripsi" th:value="${jabatan.deskripsi}"/>
 		<br>
 		Gaji Pokok: <br>
-		<input type="number" step="100000" name="gajiPokok" th:value="${jabatan.gajiPokok}"/>
+		<input type="number" step="1" name="gajiPokok" th:value="${jabatan.gajiPokok}"/>
 		<br>
 		
 		<br><br>

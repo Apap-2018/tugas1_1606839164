@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<title th:replace="fragments/fragment :: headerFragment (title='Detail Pegawai')"></title>
+	<title th:text="${title}"></title>
 	
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
